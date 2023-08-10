@@ -1,9 +1,8 @@
 <template>
   <div>
-    <h2>Invertir Cadena de Texto</h2>
-    <input v-model="cadena" placeholder="Ingrese una cadena de texto">
-    <button @click="invertirCadena">Invertir</button>
-    <p v-if="cadenaInvertida !== ''">Cadena invertida: {{ cadenaInvertida }}</p>
+    <h2>Tabla de Multiplicar del Nº 5</h2>
+    <textarea v-model="tablaResultado" rows="10" cols="50" readonly></textarea>
+    <button @click="generarTabla">Generar Tabla del 5</button>
   </div>
 </template>
 
@@ -11,28 +10,28 @@
 export default {
   data() {
     return {
-      cadena: '',
-      cadenaInvertida: ''
+      tablaResultado: ''
     };
   },
   methods: {
-    invertirCadena() {
-      this.cadenaInvertida = this.invertir(this.cadena);
-    },
-    invertir(texto) {
-      let invertido = '';
-      for (let letra of texto) {
-        invertido = letra + invertido;
+    generarTabla() {
+      const numero = 5; // Puedes cambiar este número según tu necesidad
+      let resultado = `# Tabla del ${numero} #\n`;
+
+      for (let i = 0; i <= 10; i++) {
+        let multiplicacion = i * numero;
+        resultado += `${i} x ${numero} = ${multiplicacion}\n`;
       }
-      return invertido;
+
+      this.tablaResultado = resultado;
     }
   }
 };
 </script>
 
 <style>
-/* Estilos opcionales */
-input {
-  margin-right: 10px;
+/* Estilos opcionales para textarea */
+textarea {
+  margin-top: 10px;
 }
 </style>
