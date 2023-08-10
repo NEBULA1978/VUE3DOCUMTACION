@@ -1,10 +1,9 @@
 <template>
   <div>
-    <h2>Censurar Coincidencias</h2>
-    <input v-model="texto" placeholder="Ingrese el texto">
-    <input v-model="busqueda" placeholder="Ingrese la búsqueda">
-    <button @click="censurarTexto">Censurar</button>
-    <p>{{ resultado }}</p>
+    <h2>Invertir Cadena de Texto</h2>
+    <input v-model="cadena" placeholder="Ingrese una cadena de texto">
+    <button @click="invertirCadena">Invertir</button>
+    <p v-if="cadenaInvertida !== ''">Cadena invertida: {{ cadenaInvertida }}</p>
   </div>
 </template>
 
@@ -12,29 +11,20 @@
 export default {
   data() {
     return {
-      texto: '',
-      busqueda: '',
-      resultado: ''
+      cadena: '',
+      cadenaInvertida: ''
     };
   },
   methods: {
-    censurarTexto() {
-      this.resultado = this.censurado(this.texto, this.busqueda);
+    invertirCadena() {
+      this.cadenaInvertida = this.invertir(this.cadena);
     },
-    censurado(texto, busqueda) {
-      let resultado = '';
-
-      if (!texto && !busqueda) {
-        resultado = "No puedes leer el texto y la búsqueda";
-      } else if (!texto && busqueda) {
-        resultado = "No puedes leer el texto";
-      } else if (texto && !busqueda) {
-        resultado = "No puedes hacer la búsqueda";
-      } else if (texto && busqueda) {
-        resultado = texto.replace(new RegExp(busqueda, 'gi'), '[-CENSURADO-]');
+    invertir(texto) {
+      let invertido = '';
+      for (let letra of texto) {
+        invertido = letra + invertido;
       }
-
-      return resultado;
+      return invertido;
     }
   }
 };
