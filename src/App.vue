@@ -46,3 +46,4 @@ input {
   margin-right: 10px;
 }
 </style>
+<!-- <h2>App29.vue</h2> voy por este -->
