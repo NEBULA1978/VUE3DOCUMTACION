@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h2>Tabla de Multiplicar del Nº 5</h2>
-    <textarea v-model="tablaResultado" rows="10" cols="50" readonly></textarea>
-    <button @click="generarTabla">Generar Tabla del 5</button>
+    <h2>Contar Números Impares</h2>
+    <input v-model.number="numero1" placeholder="Ingrese el primer número">
+    <input v-model.number="numero2" placeholder="Ingrese el segundo número">
+    <button @click="contarImpares">Contar</button>
+    <p v-if="contador !== null">{{ contador }}</p>
   </div>
 </template>
 
@@ -10,28 +12,37 @@
 export default {
   data() {
     return {
-      tablaResultado: ''
+      numero1: null,
+      numero2: null,
+      contador: null
     };
   },
   methods: {
-    generarTabla() {
-      const numero = 5; // Puedes cambiar este número según tu necesidad
-      let resultado = `# Tabla del ${numero} #\n`;
+    contarImpares() {
+      if (this.numero1 !== null && this.numero2 !== null) {
+        let contador = 0;
+        let num1 = this.numero1;
+        let num2 = this.numero2;
 
-      for (let i = 0; i <= 10; i++) {
-        let multiplicacion = i * numero;
-        resultado += `${i} x ${numero} = ${multiplicacion}\n`;
+        while (num1 <= num2) {
+          if (num1 % 2 !== 0) {
+            contador++;
+          }
+          num1++;
+        }
+
+        this.contador = contador;
+      } else {
+        this.contador = null;
       }
-
-      this.tablaResultado = resultado;
     }
   }
 };
 </script>
 
 <style>
-/* Estilos opcionales para textarea */
-textarea {
-  margin-top: 10px;
+/* Estilos opcionales */
+input {
+  margin-right: 10px;
 }
 </style>
