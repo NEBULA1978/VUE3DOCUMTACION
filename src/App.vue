@@ -1,13 +1,33 @@
 <template>
   <div>
-    <!-- Usamos v-for para crear dos campos de entrada -->
-    <div v-for="(input, index) in inputs" :key="index">
-      <h1>{{ input.msg }}</h1>
-      <input v-model="input.msg">
-    </div>
-    
-    <!-- Botón para cambiar o restaurar el valor del segundo campo de entrada -->
-    <button @click="toggleValor">Cambiar Valor</button>
+    <!-- Sección para agregar usuarios -->
+    <h2>Agregar Usuarios</h2>
+    <form @submit.prevent="agregarUsuario">
+      <input v-model="nuevoUsuario" placeholder="Nombre de usuario">
+      <button>Añadir Usuario</button>
+    </form>
+
+    <!-- Sección para mostrar/ocultar la lista de usuarios -->
+    <h2>Lista de Usuarios</h2>
+    <button @click="toggleLista">{{ mostrarLista ? 'Ocultar' : 'Mostrar' }} Lista</button>
+
+    <!-- Lista de usuarios con botones para borrar y guardar -->
+    <ul v-if="mostrarLista">
+      <li v-for="(usuario, index) in usuarios" :key="index">
+        {{ usuario }}
+        <button @click="borrarUsuario(index)">Borrar</button>
+        <button @click="guardarUsuario(index)">Guardar</button>
+      </li>
+    </ul>
+
+    <!-- Sección para mostrar/ocultar la lista de usuarios guardados -->
+    <h2>Lista Guardada</h2>
+    <button @click="toggleListaGuardada">{{ mostrarListaGuardada ? 'Ocultar' : 'Mostrar' }} Lista Guardada</button>
+
+    <!-- Lista de usuarios guardados -->
+    <ul v-if="mostrarListaGuardada">
+      <li v-for="(usuario, index) in usuariosGuardados" :key="index">{{ usuario }}</li>
+    </ul>
   </div>
 </template>
 
@@ -15,22 +35,37 @@
 export default {
   data() {
     return {
-      inputs: [
-        { msg: 'Hello World!' },
-        { msg: 'Hola Mundo!' }
-      ],
-      newValue: 'Nuevo Valor',
-      originalValue: 'Hola Mundo!' // Valor original del segundo campo
+      nuevoUsuario: '',
+      usuarios: ['Usuario 1', 'Usuario 2', 'Usuario 3'],
+      usuariosGuardados: [],
+      mostrarLista: false,
+      mostrarListaGuardada: false
     };
   },
   methods: {
-    toggleValor() {
-      // Verificamos si el valor actual es el valor original
-      if (this.inputs[1].msg === this.originalValue) {
-        this.inputs[1].msg = this.newValue; // Cambiamos al nuevo valor
-      } else {
-        this.inputs[1].msg = this.originalValue; // Restauramos el valor original
+    // Agregar un nuevo usuario a la lista
+    agregarUsuario() {
+      if (this.nuevoUsuario.trim() !== '') {
+        this.usuarios.push(this.nuevoUsuario);
+        this.nuevoUsuario = ''; // Limpiamos el campo de entrada
       }
+    },
+    // Borrar un usuario de la lista
+    borrarUsuario(index) {
+      this.usuarios.splice(index, 1);
+    },
+    // Guardar un usuario en la lista de usuarios guardados
+    guardarUsuario(index) {
+      const usuario = this.usuarios[index];
+      this.usuariosGuardados.push(usuario);
+    },
+    // Alternar la visibilidad de la lista de usuarios
+    toggleLista() {
+      this.mostrarLista = !this.mostrarLista;
+    },
+    // Alternar la visibilidad de la lista de usuarios guardados
+    toggleListaGuardada() {
+      this.mostrarListaGuardada = !this.mostrarListaGuardada;
     }
   }
 };
