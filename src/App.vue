@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h2>Calcular Porcentaje</h2>
-    <input v-model.number="porcentaje" placeholder="Ingrese el porcentaje">
-    <input v-model.number="numero" placeholder="Ingrese el número">
-    <button @click="calcularPorcentaje">Calcular</button>
-    <p v-if="resultado !== ''">{{ resultado }}</p>
+    <h2>Censurar Coincidencias</h2>
+    <input v-model="texto" placeholder="Ingrese el texto">
+    <input v-model="busqueda" placeholder="Ingrese la búsqueda">
+    <button @click="censurarTexto">Censurar</button>
+    <p>{{ resultado }}</p>
   </div>
 </template>
 
@@ -12,19 +12,29 @@
 export default {
   data() {
     return {
-      porcentaje: null,
-      numero: null,
+      texto: '',
+      busqueda: '',
       resultado: ''
     };
   },
   methods: {
-    calcularPorcentaje() {
-      if (this.porcentaje !== null && this.numero !== null) {
-        const operacion = (this.numero * (this.porcentaje / 100));
-        this.resultado = `El ${this.porcentaje} % de ${this.numero} es ${operacion.toFixed(2)}`;
-      } else {
-        this.resultado = '';
+    censurarTexto() {
+      this.resultado = this.censurado(this.texto, this.busqueda);
+    },
+    censurado(texto, busqueda) {
+      let resultado = '';
+
+      if (!texto && !busqueda) {
+        resultado = "No puedes leer el texto y la búsqueda";
+      } else if (!texto && busqueda) {
+        resultado = "No puedes leer el texto";
+      } else if (texto && !busqueda) {
+        resultado = "No puedes hacer la búsqueda";
+      } else if (texto && busqueda) {
+        resultado = texto.replace(new RegExp(busqueda, 'gi'), '[-CENSURADO-]');
       }
+
+      return resultado;
     }
   }
 };
