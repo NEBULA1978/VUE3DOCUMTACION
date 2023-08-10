@@ -1,8 +1,9 @@
 <template>
   <div>
-    <h2>Tabla de Multiplicar del Nº 5</h2>
-    <textarea v-model="tablaResultado" rows="10" cols="50" readonly></textarea>
-    <button @click="generarTabla">Generar Tabla del 5</button>
+    <h2>Verificar Palíndromo</h2>
+    <input v-model="inputText" placeholder="Ingrese una cadena de texto">
+    <button @click="verificarPalindromo">Verificar</button>
+    <p>{{ resultado }}</p>
   </div>
 </template>
 
@@ -10,28 +11,23 @@
 export default {
   data() {
     return {
-      tablaResultado: ''
+      inputText: '',
+      resultado: ''
     };
   },
   methods: {
-    generarTabla() {
-      const numero = 5; // Puedes cambiar este número según tu necesidad
-      let resultado = `# Tabla del ${numero} #\n`;
-
-      for (let i = 0; i <= 10; i++) {
-        let multiplicacion = i * numero;
-        resultado += `${i} x ${numero} = ${multiplicacion}\n`;
-      }
-
-      this.tablaResultado = resultado;
+    verificarPalindromo() {
+      const texto = this.inputText.toLowerCase().replace(/\s/g, ''); // Convertir a minúsculas y quitar espacios
+      const invertido = texto.split('').reverse().join('');
+      this.resultado = invertido === texto ? 'Es un palíndromo' : 'No es un palíndromo';
     }
   }
 };
 </script>
 
 <style>
-/* Estilos opcionales para textarea */
-textarea {
-  margin-top: 10px;
+/* Estilos opcionales */
+input {
+  margin-right: 10px;
 }
 </style>
